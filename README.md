@@ -1,4 +1,4 @@
-# WaveC - Product Inventory Management API
+# WaveC - Weighted Average Cost Project API
 
 A comprehensive RESTful API built with Laravel 12 for managing product inventory and transactions with weighted average cost (WAC) calculations, real-time inventory tracking, and complete audit trails.
 
