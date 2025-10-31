@@ -15,7 +15,7 @@ A comprehensive RESTful API built with Laravel 12 for managing product inventory
 
 ## 📋 Requirements
 
-- PHP 8.4
+- PHP 8.2 or above
 - Composer
 - MySQL/PostgreSQL/SQLite database
 
