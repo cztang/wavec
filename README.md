@@ -223,10 +223,10 @@ Authorization: Bearer {token}
 
 ### Transaction Rules
 1. **First Transaction**: Must always be a purchase. If you add a backdated transaction, it will check if it is earlier than the first transaction. If yes, it can only be purchase.
-2. **Sale Validation**: Cannot sell more than available inventory. If you add a backdated transaction, it will check if the quantity at that point of time is enough for sale or not. If not, it will be blocked.
-3. **Date Constraints**: Transactions cannot be more than 30 days earlier than the latest transaction. Usually after end of month account closing, it must not be changed anymore.
-4. **WAC Calculation**: Automatically calculated for purchases, preserved for sales. Random date will recalculate the wac for all subsequent transactions
-5. **Negative Inventory**: System prevents negative inventory situations. Updating or deleting will be blocked if it will cause negative inventory in any of the subsequent transactions
+2. **Sale Validation**: Cannot sell more than available inventory. If you add a backdated transaction for sale, it will check if the quantity at that point of time is enough for sale or not. If not, it will be blocked.
+3. **Date Constraints**: Transactions cannot be more than 30 days earlier than the latest transaction. Usually after end of month account closing, it must not be changed anymore. Stricter way should be we shouldn't allow edit or delete for transaction from last month. However, in real world, it seems like this is not always the case.
+4. **WAC Calculation**: Automatically calculated for purchases, and preserved for sales. Random date transaction will recalculate the wac for all subsequent transactions
+5. **Negative Inventory**: System prevents negative inventory situations. Updating or deleting existing transactions will be blocked if it will cause negative inventory in any of the subsequent transactions
 6. **Audit Trail**: Historical product data captured at transaction date
 
 ### WAC (Weighted Average Cost) Calculation
