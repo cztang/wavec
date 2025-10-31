@@ -14,8 +14,8 @@ A comprehensive RESTful API built with Laravel 12 for managing product inventory
 
 ## 📋 Requirements
 
-- PHP 8.4 or higher
-- Compose
+- PHP 8.4
+- Composer
 - MySQL/PostgreSQL/SQLite database
 
 ## 🛠️ Installation
@@ -23,7 +23,7 @@ A comprehensive RESTful API built with Laravel 12 for managing product inventory
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/cztang/wavec.git
 cd wavec
 ```
 
@@ -78,6 +78,8 @@ php artisan db:seed --class=ProductSeeder
 php artisan serve
 
 # The API will be available at http://localhost:8000
+
+# If you are using Laravel Herd, it will be available at http://wavec.test
 ```
 
 ## 📖 API Documentation
@@ -175,7 +177,9 @@ Content-Type: application/json
 }
 ```
 
-**Note:** Transaction type and date cannot be changed via update. If require to change the date, please delete the record. If the transaction type for the existing transaction ID is 2 (sale), cost_per_unit will not required, value passed in to the API will be ignored.
+**Note:** 
+- Transaction type and transaction date cannot be changed via update. If you need to change the date, please delete the record and create a new transaction
+- If the transaction type for the existing transaction ID is 2 (sale), cost_per_unit will not required, value passed in to the API will be ignored.
 
 #### Delete Transaction
 ```http
@@ -213,10 +217,10 @@ Authorization: Bearer {token}
 ## 🎯 Business Rules
 
 ### Transaction Rules
-1. **First Transaction**: Must always be a purchase
-2. **Sale Validation**: Cannot sell more than available inventory
-3. **Date Constraints**: Transactions cannot be more than 30 days earlier than the latest transaction
-4. **WAC Calculation**: Automatically calculated for purchases, preserved for sales
+1. **First Transaction**: Must always be a purchase. If you add a backdated transaction, it will check if it is earlier than the first transction. If yes, it can only be purchase.
+2. **Sale Validation**: Cannot sell more than available inventory. If you add a backdated transaction, it will check if the quantity at that point of time is enough for sale or not. If not, it will be blocked.
+3. **Date Constraints**: Transactions cannot be more than 30 days earlier than the latest transaction. Usually after end of month account closing, it must not be changed anymore.
+4. **WAC Calculation**: Automatically calculated for purchases, preserved for sales. Random date will recalculate the wac for all subsequent transactions
 5. **Negative Inventory**: System prevents negative inventory situations. Updating or deleting will be blocked if it will cause negative inventory in any of the subsequent transactions
 6. **Audit Trail**: Historical product data captured at transaction date
 
@@ -231,6 +235,14 @@ New WAC = (Current Total Cost + Purchase Cost) / New Total Quantity
 ```
 WAC remains unchanged (uses current WAC for cost calculation)
 ```
+
+### Feature that can make the system better
+1.  **User tracking**: As of now, system doesnt track who is the one who add, update or delete a transaction. Once system sign in, they will be updating a transaction and the transaction is viewable by anyone who register via the system. If this is a project for my friend running e-commerce business, I will setup a simple hosting for him, create a simple frontend, and hide the register account API.
+2.  **Product binding to user**: If we tie the product to user, we can make this to be a SAAS project. Each user who register, will have their own product. We need to create API to allow product creation.
+3.  **Product binding to company**: If we create company module, link the product to company instead of user, and link the user to company, we can allow multiple user to update same product for their company.
+4.  **Role & permissions for user**: If we allow company user to create role and permission, to limit their other users activity, such as only Super Admin can do update and delete, general admin can only create new transaction, this will be even better.
+5.  **Selling price record**: If we record the selling price too, not just how many quantity is sold, we can do a good report to calculate how much profit they earn on each transaction.
+
 
 ## 🔒 Validation Rules
 
@@ -310,14 +322,14 @@ php artisan route:clear
 - Historical data is preserved for audit purposes
 - System prevents data inconsistencies through validation and constraints
 
----
-
 ## 🤖 AI Assists
 
 - Product Seeding
-- Validation Request but require changes afterwards
+- Validation Request but plenty of changes is done afterwards
 - Standardising API return pagination format
-- Resources for data return
+- Resources for data return in API
+
+---
 
 Built using Laravel 12
 
