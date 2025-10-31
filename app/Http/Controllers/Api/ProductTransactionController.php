@@ -51,6 +51,16 @@ class ProductTransactionController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
 
+        //check if there is transaction on same date
+        $existingTransaction = ProductTransaction::where('product_id', $id)
+            ->where('transaction_date', $request->transaction_date)
+            ->first();
+        if ($existingTransaction) {
+            return response()->json([
+                'message' => 'A transaction already exists on the specified transaction date.',
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $previousTransaction = ProductTransaction::where('product_id', $id)
             ->where('transaction_date', '<', $request->transaction_date)
             ->latest('transaction_date')

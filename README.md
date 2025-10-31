@@ -241,12 +241,13 @@ New WAC = (Current Total Cost + Purchase Cost) / New Total Quantity
 WAC remains unchanged (uses current WAC for cost calculation)
 ```
 
-### Feature that can make the system better
+
+### Features that can make the system better
 1.  **User tracking**: As of now, system doesnt track who is the one who add, update or delete a transaction. Once system sign in, they will be updating a transaction and the transaction is viewable by anyone who register via the system. If this is a project for my friend running e-commerce business, I will setup a simple hosting for him, create a simple frontend, and hide the register account API.
-2.  **Product binding to user**: If we tie the product to user, we can make this to be a SAAS project. Each user who register, will have their own product. We need to create API to allow product creation.
+2.  **Product binding to user**: If we tie the product to user, we can make this to be a SAAS project. Each user who register, will have their own product. We also will need to create API to allow product creation.
 3.  **Product binding to company**: If we create company module, link the product to company instead of user, and link the user to company, we can allow multiple user to update same product for their company.
-4.  **Role & permissions for user**: If we allow company user to create role and permission, to limit their other users activity, such as only Super Admin can do update and delete, general admin can only create new transaction, this will be even better.
-5.  **Selling price record**: If we record the selling price too, not just how many quantity is sold, we can do a good report to calculate how much profit they earn on each transaction.
+4.  **Role & permissions for user**: If we allow company user to create role and permission, to limit their other users activity, such as only Super Admin can do update and delete, general admin can only create new transaction and create new product, this will be an even better SAAS project.
+5.  **Selling price record**: If we record the selling price too, not just how many quantity is sold, we can generate a good report to calculate how much profit they earn on each transaction.
 
 
 ## 🔒 Validation Rules
