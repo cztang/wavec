@@ -10,6 +10,7 @@ A comprehensive RESTful API built with Laravel 12 for managing product inventory
 - **Inventory Control** - Quantity tracking with negative inventory prevention
 - **Audit Trail** - Complete transaction history with before/after states
 - **Data Validation** - Comprehensive request validation with custom business rules
+- **Data Precision** - 4 decimal points for wac and cost field. 8 decimal points for quantity (to handle cryptocurrency if required)
 - **API Resources** - Structured JSON responses with formatted data
 
 ## 📋 Requirements
@@ -87,6 +88,10 @@ php artisan serve
 ### Base URL
 ```
 http://localhost:8000/api
+
+OR
+
+http://wavec.test/api
 ```
 
 ### Authentication
@@ -217,7 +222,7 @@ Authorization: Bearer {token}
 ## 🎯 Business Rules
 
 ### Transaction Rules
-1. **First Transaction**: Must always be a purchase. If you add a backdated transaction, it will check if it is earlier than the first transction. If yes, it can only be purchase.
+1. **First Transaction**: Must always be a purchase. If you add a backdated transaction, it will check if it is earlier than the first transaction. If yes, it can only be purchase.
 2. **Sale Validation**: Cannot sell more than available inventory. If you add a backdated transaction, it will check if the quantity at that point of time is enough for sale or not. If not, it will be blocked.
 3. **Date Constraints**: Transactions cannot be more than 30 days earlier than the latest transaction. Usually after end of month account closing, it must not be changed anymore.
 4. **WAC Calculation**: Automatically calculated for purchases, preserved for sales. Random date will recalculate the wac for all subsequent transactions
